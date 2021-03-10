@@ -55,7 +55,7 @@
 							'numberposts' => 5,
 							'offset' => 1
 							// 'orderby'	=> 'javascript',			
-							'category-name' => 'javascript, css, html, web-design',
+							'category-name' => 'javascript, css, html, web-design'
 							// 'order'   => 'ASC'						
 						]);
 

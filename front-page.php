@@ -70,7 +70,7 @@
 							<li class="post">
 								<?php the_category() ?>
 								<a class="post-permalink" href="<?php echo get_the_permalink(); ?>">
-									<h4 class="post-title"><?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?></h4
+									<h4 class="post-title"><?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?></h4>
 								</a>
 								
 							</li>
@@ -120,8 +120,7 @@
 						<!-- <h4 class="article-title"><?php the_title(); ?></h4> -->
 						<h4 class="article-title"><?php echo mb_strimwidth(get_the_title(), 0, 50, '...'); ?></h4>
 					</a>
-					<img src="<?php echo get_the_post_thumbnail_url(null, 'homepage-thumb'); 
-					?>" alt="">			
+					<img src="<?php echo get_the_post_thumbnail_url(null, 'homepage-thumb');?>" alt="">			
 				</li>
 				<?php 
 				}
@@ -132,6 +131,139 @@
 				}
 			wp_reset_postdata(); // Сбрасываем $post
 		?>			
+	</ul>
+	<!-- /. article-list -->
+	<ul class="article-grid">
+		<?php		
+			global $post;
+			// формируем запрос из БД - получаем 7 постов
+			$query = new WP_Query( 'tag=popular');
+			// проверяем есть ли посты
+			if ( $query->have_posts() ) {
+				// создаем переменную - счетчик постов
+				$cnt = 0;
+				// пока есть посты - выводим их
+				while ( $query->have_posts() )  {
+					$query->the_post('tag=popular');
+					// увеличиваем счетчик посто
+					$cnt++;
+					// echo $cnt;
+					switch ($cnt) {
+						// выводим 1 пост
+						case '1':							
+							?>
+								<li class="article-grid-item article-grid-item-1">
+									<a href="<?php the_permalink(); ?>" class="article-grid-permalink">
+										<!-- вставляем фотку  -->
+										<!-- <img class="article-grid-thumb" src="<?php echo get_the_post_thumbnail_url(null, 'homepage-thumb'); ?>" alt=""> -->
+
+										<span class="category-name"><?php $category = get_the_category(); echo $category[0] -> name; ?></span>
+										<!-- <h4 class="article-grid-title"><?php echo mb_strimwidth(get_the_title(), 0, 60, '...'); ?></h4> -->
+										
+										<h4 class="article-grid-title"><?php echo get_the_title(); ?></h4>
+										<p class="article-grid-excerpt">
+											<?php echo mb_strimwidth(get_the_excerpt(), 0, 90, '...'); ?>
+											
+										</p>
+										<!-- информация про автора  -->
+										<div class="article-grid-info">
+											<div class="author">
+												<?php $author_id = get_the_author_meta('ID'); ?>
+												<img src="<?php echo get_avatar_url($author_id); ?>" alt="" class="author-avatar">											
+												<span class="author-name"><strong><?php the_author();?></strong>: <?php the_author_meta('description');?></span>
+											</div>
+											<!-- иконка и счетчик комментариев -->
+											<div class="comments">
+												<img src="<?echo get_template_directory_uri() . '/assets/images/comment.svg' ?>" alt="icon: comment" сlass="comments-icon">
+												<span class="comments-counter"><?php comments_number('0', '1', '%') ?></span>
+											</div>		
+										</div>
+									</a>
+								</li>
+							<?php
+							break;
+						case '2':
+							?>
+								<li class="article-grid-item article-grid-item-2">
+									<img src="<?php echo get_the_post_thumbnail_url() ?>" alt="" class="article-grid-thumb">
+									<a href="<?php the_permalink();  ?>" class="article-grid-permalink">
+										<span class="tag">
+											<!-- мета-тег Популярное -->
+											<!-- <?php echo get_the_tag_list(); ?> -->
+											<?php $posttags = get_the_tags();
+												if ($posttags) {
+													echo $posttags[0]->name . ' ';
+												}
+											?>
+										</span>
+										
+										<span class="category-name"><?php $category = get_the_category(); echo $category[0] -> name; ?></span>
+											<!-- <h4 class="article-grid-title"><?php echo mb_strimwidth(get_the_title(), 0, 50, '...'); ?></h4>	 -->
+										<h4 class="article-grid-title"><?php the_title(); ?></h4>
+										
+
+										<!-- информация про автора  -->
+										<div class="article-grid-info">
+											<div class="author">
+												<?php $author_id = get_the_author_meta('ID'); ?>
+												<img src="<?php echo get_avatar_url($author_id); ?>" alt="" class="author-avatar">
+
+												<div class="author-info">
+													<span class="author-name"><strong><?php the_author();?></strong></span>	
+													<span class="date"><?php the_time('j F');?></span>
+
+													<div class="comments">
+														<img src="<?echo get_template_directory_uri() . '/assets/images/comment-white.svg' ?>" alt="icon: comment" class="comments-icon">
+														<span class="comments-counter"><?php comments_number('0', '1', '%') ?></span>
+													</div>
+													<div class="likes">
+														<img src="<?php echo get_template_directory_uri() . '/assets/images/heart.svg' ?>" alt="icon: like" class="likes-icon">
+														<span class="likes-counter"><?php comments_number('0', '1', '%') ?></span>
+													</div>
+												</div>
+												<!-- /.author-info -->
+											</div>
+												<!-- /.author -->
+										</div>
+										
+									</a>
+								</li>
+							<?php
+							break;
+						case '3':
+							?>
+							<li class="article-grid-item article-grid-item-3">
+								<a href="<?php the_permalink(); ?>" class="article-grid-permalink">
+									<img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="" class="article-thumb">									
+									<h4 class="article-grid-title"><?php echo the_title() ?></h4>
+								</a>
+							</li>
+							<?php
+							break;
+							// выводим остальные 4 поста
+						default:
+							?>
+								<li class="article-grid-item article-grid-item-default">
+									<a href="<?php the_permalink() ?>" class="article-grid-permalink">
+										<h4 class="article-grid-title"><?php echo mb_strimwidth(get_the_title(), 0, 40, '...') ?></h4>										
+										<p class="article-grid-excerpt"><?php echo mb_strimwidth(get_the_excerpt(), 0, 40, '...') ?></p>
+										<span class="article-grid-date"><?php the_time('j F Y') ?></span>
+									</a>
+								</li>
+							<?php
+							break;
+					}
+					?>
+					<!-- Вывода постов, функции цикла: the_title() и т.д. -->
+					<?php 
+				}
+			} else {
+				// Постов не найдено
+			}
+
+			wp_reset_postdata(); // Сбрасываем $post
+		?>
+	
 	</ul>
 </div>
 <!-- /.container -->

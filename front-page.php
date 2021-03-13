@@ -137,14 +137,17 @@
 		<?php		
 			global $post;
 			// формируем запрос из БД - получаем 7 постов
-			$query = new WP_Query( 'tag=popular');
+			$query = new WP_Query( [
+				'tag' => 'popular',
+				'posts_per_page' => 7
+			] );
 			// проверяем есть ли посты
 			if ( $query->have_posts() ) {
 				// создаем переменную - счетчик постов
 				$cnt = 0;
 				// пока есть посты - выводим их
-				while ( $query->have_posts() )  {
-					$query->the_post('tag=popular');
+				while ( $query->have_posts())  {
+					$query->the_post();
 					// увеличиваем счетчик посто
 					$cnt++;
 					// echo $cnt;
@@ -247,7 +250,7 @@
 									<a href="<?php the_permalink() ?>" class="article-grid-permalink">
 										<h4 class="article-grid-title"><?php echo mb_strimwidth(get_the_title(), 0, 40, '...') ?></h4>										
 										<p class="article-grid-excerpt"><?php echo mb_strimwidth(get_the_excerpt(), 0, 40, '...') ?></p>
-										<span class="article-grid-date"><?php the_time('j F Y') ?></span>
+										<span class="date"><?php the_time('j F Y') ?></span>
 									</a>
 								</li>
 							<?php

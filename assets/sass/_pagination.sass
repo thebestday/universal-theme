@@ -1,0 +1,43 @@
+.pagination
+	.nav-links
+		margin-top: 40px
+		background-color: #fff
+		border-radius: 10px
+		display: flex
+		justify-content: center
+		align-items: center
+		*
+			padding: 17px
+			text-decoration: none
+			font-size: 14px
+			line-height: 20px
+			font-family: "Lato Black"
+			color: #262D33
+			text-align: center
+			&:not(:last-child)
+				border-right: 1px solid #D9DADB
+				border-left: 1px solid #D9DADB
+		.prev
+			padding: 17px 70px
+			margin-right: auto
+			flex-grow: 1
+			display: flex
+			align-items: center
+			// &::before
+			// 	content: ''
+			// 	width: 15px
+			// 	height: 7px
+			// 	border: 1px solid
+			// 	display: inline-block
+			// 	background: url(../images/left-arrow.svg) fill="#111" no-repeat center 
+		.next
+			display: flex
+			align-items: center
+			padding: 17px 70px
+			margin-left: auto
+			flex-grow: 1
+	&-prev
+		&-icon
+			width: 15px
+			height: 7px
+			fill: #BCBFC2	
